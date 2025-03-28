@@ -31,11 +31,12 @@ interface APISearchDrawerProps {
   toggleDrawer: (open: boolean) => () => void;
   handleApiSearch: (
     query: string,
-    searchType: "local" | "global"
+    searchType: "local" | "global" | "drift"
   ) => Promise<void>;
   apiSearchResults: SearchResult | null;
   localSearchEnabled: boolean;
   globalSearchEnabled: boolean;
+  driftSearchEnabled: boolean;
   hasCovariates: boolean;
   serverUp: boolean;
 }
@@ -47,12 +48,14 @@ const APISearchDrawer: React.FC<APISearchDrawerProps> = ({
   apiSearchResults,
   localSearchEnabled,
   globalSearchEnabled,
+  driftSearchEnabled,
   hasCovariates,
   serverUp,
 }) => {
   const [query, setQuery] = useState<string>("");
   const [loadingLocal, setLoadingLocal] = useState<boolean>(false);
   const [loadingGlobal, setLoadingGlobal] = useState<boolean>(false);
+  const [loadingDrift, setLoadingDrift] = useState<boolean>(false);
   const [expandedTables, setExpandedTables] = useState<{
     [key: string]: boolean;
   }>({});
@@ -68,11 +71,13 @@ const APISearchDrawer: React.FC<APISearchDrawerProps> = ({
     }
   }, [apiSearchResults]);
 
-  const handleSearch = async (searchType: "local" | "global") => {
+  const handleSearch = async (searchType: "local" | "global" | "drift") => {
     if (searchType === "local") {
       setLoadingLocal(true);
-    } else {
+    } else if (searchType === "global") {
       setLoadingGlobal(true);
+    } else {
+      setLoadingDrift(true);
     }
 
     try {
@@ -80,8 +85,10 @@ const APISearchDrawer: React.FC<APISearchDrawerProps> = ({
     } finally {
       if (searchType === "local") {
         setLoadingLocal(false);
-      } else {
+      } else if (searchType === "global") {
         setLoadingGlobal(false);
+      } else {
+        setLoadingDrift(false);
       }
     }
   };
@@ -136,7 +143,8 @@ const APISearchDrawer: React.FC<APISearchDrawerProps> = ({
                 !serverUp ||
                 !localSearchEnabled ||
                 loadingLocal ||
-                loadingGlobal
+                loadingGlobal ||
+                loadingDrift
               }
             >
               {loadingLocal ? <CircularProgress size={24} /> : "Local Search"}
@@ -150,10 +158,26 @@ const APISearchDrawer: React.FC<APISearchDrawerProps> = ({
                 !serverUp ||
                 !globalSearchEnabled ||
                 loadingLocal ||
-                loadingGlobal
+                loadingGlobal ||
+                loadingDrift
               }
             >
               {loadingGlobal ? <CircularProgress size={24} /> : "Global Search"}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ flex: 1, whiteSpace: "normal", textAlign: "center" }}
+              onClick={() => handleSearch("drift")}
+              disabled={
+                !serverUp ||
+                !driftSearchEnabled ||
+                loadingLocal ||
+                loadingGlobal ||
+                loadingDrift
+              }
+            >
+              {loadingDrift ? <CircularProgress size={24} /> : "Drift Search"}
             </Button>
           </Box>
 

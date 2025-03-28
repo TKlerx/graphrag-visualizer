@@ -55,6 +55,7 @@ const requests = {
 const Search = {
   global: (query: string) => requests.get('search/global', new URLSearchParams({ query })),
   local: (query: string) => requests.get('search/local', new URLSearchParams({ query })),
+  drift: (query: string) => requests.get('search/drift', new URLSearchParams({ query })),
 };
 
 const Status = {

@@ -137,13 +137,15 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
 
   const handleApiSearch = async (
     query: string,
-    searchType: "local" | "global"
+    searchType: "local" | "global" | "drift"
   ) => {
     try {
       const data: SearchResult =
         searchType === "local"
           ? await agent.Search.local(query)
-          : await agent.Search.global(query);
+          : searchType === "global"
+          ? await agent.Search.global(query)
+          : await agent.Search.drift(query);
 
       setApiSearchResults(data);
       // Process the search result to update the graph data
@@ -725,6 +727,7 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
         apiSearchResults={apiSearchResults}
         localSearchEnabled={localSearchEnabled}
         globalSearchEnabled={includeCommunities}
+        driftSearchEnabled={includeCommunities}
         hasCovariates={hasCovariates}
         serverUp={serverUp}
       />
@@ -886,7 +889,7 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
           onClick={toggleApiDrawer(true)}
           startIcon={<SearchIcon />}
         >
-          Ask Query (Local/Global Search)
+          Ask Query (Local/Global/Drift Search)
         </Button>
         <Button
           variant="contained"
