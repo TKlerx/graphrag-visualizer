@@ -1,0 +1,99 @@
+-Goal-
+Given a text document that is potentially relevant to private equity investment committee preparation and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
+
+Use the extraction to support an IC memo that combines target-company facts, sponsor knowledge, market context, transaction context, risks, value creation levers, ESG considerations, and diligence gaps.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: One of the following types: [{entity_types}]
+- entity_description: Comprehensive description of the entity's attributes and activities, emphasizing why the entity matters for investment underwriting
+Format each entity as ("entity"<|><entity_name><|><entity_type><|><entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are clearly related to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation of how the two entities are related and why that relationship matters for IC diligence
+- relationship_strength: a numeric score from 1 to 10 indicating strength of the relationship
+Format each relationship as ("relationship"<|><source_entity><|><target_entity><|><relationship_description><|><relationship_strength>)
+
+3. Prefer specific named entities over generic concepts.
+
+4. Capture transaction facts, dates, values, parties, markets, products, customer segments, financial metrics, risks, ESG topics, and value creation levers when present.
+
+5. Mark missing or unresolved evidence as DILIGENCE_GAP only when the text explicitly points to an unanswered question, missing evidence, or required diligence workstream. Do not invent gaps.
+
+6. Do not invent financial metrics that are not present in the source.
+
+7. Extract at most 8 high-signal entities and at most 10 high-signal relationships from each text chunk. Prefer quality over coverage.
+
+8. Do not extract generic entities such as "PRIVATE EQUITY", "MARKET", "CUSTOMERS", or "INVESTORS" unless the text gives a specific named market, customer segment, transaction, or metric that is useful for the IC memo.
+
+9. Return output in English as a single list of all entities and relationships identified in steps 1 and 2. Use **##** as the list delimiter.
+
+10. When finished, output <|COMPLETE|>
+
+######################
+-Examples-
+######################
+Example 1:
+Entity_types: COMPANY,SPONSOR,TRANSACTION,FINANCIAL_METRIC,VALUE_CREATION_LEVER,RISK
+Text:
+Partners Group agreed to acquire Forterro, a European provider of ERP software for industrial small and mid-sized businesses. The investment thesis focuses on product modernization, cloud migration, and strategic M&A. The source does not disclose EBITDA or purchase multiple.
+######################
+Output:
+("entity"<|>PARTNERS GROUP<|>SPONSOR<|>Partners Group is the sponsor acquiring Forterro and is relevant as the owner responsible for investment strategy and value creation)
+##
+("entity"<|>FORTERRO<|>COMPANY<|>Forterro is a European ERP software provider serving industrial small and mid-sized businesses)
+##
+("entity"<|>FORTERRO ACQUISITION<|>TRANSACTION<|>The Forterro acquisition is a sponsor-backed transaction involving Partners Group and Forterro)
+##
+("entity"<|>PRODUCT MODERNIZATION<|>VALUE_CREATION_LEVER<|>Product modernization is identified as a value creation lever for Forterro)
+##
+("entity"<|>CLOUD MIGRATION<|>VALUE_CREATION_LEVER<|>Cloud migration is identified as a value creation lever for Forterro)
+##
+("entity"<|>STRATEGIC M&A<|>VALUE_CREATION_LEVER<|>Strategic M&A is identified as a value creation lever for Forterro)
+##
+("entity"<|>UNDISCLOSED EBITDA AND PURCHASE MULTIPLE<|>DILIGENCE_GAP<|>The source does not disclose EBITDA or purchase multiple, leaving a financial diligence gap)
+##
+("relationship"<|>PARTNERS GROUP<|>FORTERRO<|>Partners Group agreed to acquire Forterro, making it the sponsor for the investment case<|>10)
+##
+("relationship"<|>FORTERRO<|>CLOUD MIGRATION<|>Cloud migration is part of the Forterro value creation thesis<|>8)
+##
+("relationship"<|>FORTERRO<|>UNDISCLOSED EBITDA AND PURCHASE MULTIPLE<|>Forterro's EBITDA and purchase multiple are not disclosed in the source and require diligence before IC approval<|>8)
+<|COMPLETE|>
+
+######################
+Example 2:
+Entity_types: COMPANY,MARKET,CUSTOMER_SEGMENT,GEOGRAPHY,RISK,ESG_TOPIC
+Text:
+European industrial software vendors benefit from digitization in manufacturing, but customers can delay ERP upgrades when macro uncertainty rises. Data privacy and cybersecurity are important diligence topics for software platforms serving regulated customers.
+######################
+Output:
+("entity"<|>EUROPEAN INDUSTRIAL SOFTWARE<|>MARKET<|>European industrial software is a market benefiting from manufacturing digitization)
+##
+("entity"<|>MANUFACTURING CUSTOMERS<|>CUSTOMER_SEGMENT<|>Manufacturing customers are buyers of industrial software and ERP systems)
+##
+("entity"<|>EUROPE<|>GEOGRAPHY<|>Europe is the relevant geography for the industrial software market discussed in the text)
+##
+("entity"<|>MACRO UNCERTAINTY<|>RISK<|>Macro uncertainty is a risk because it can cause customers to delay ERP upgrades)
+##
+("entity"<|>DATA PRIVACY<|>ESG_TOPIC<|>Data privacy is an ESG and compliance diligence topic for software platforms serving regulated customers)
+##
+("entity"<|>CYBERSECURITY<|>ESG_TOPIC<|>Cybersecurity is an ESG and compliance diligence topic for software platforms serving regulated customers)
+##
+("relationship"<|>EUROPEAN INDUSTRIAL SOFTWARE<|>MANUFACTURING CUSTOMERS<|>Manufacturing customers drive demand for European industrial software through digitization needs<|>8)
+##
+("relationship"<|>MACRO UNCERTAINTY<|>MANUFACTURING CUSTOMERS<|>Macro uncertainty can cause manufacturing customers to delay ERP upgrades<|>7)
+##
+("relationship"<|>CYBERSECURITY<|>EUROPEAN INDUSTRIAL SOFTWARE<|>Cybersecurity is a diligence topic for software platforms in European industrial software<|>7)
+<|COMPLETE|>
+
+######################
+-Real Data-
+######################
+Entity_types: {entity_types}
+Text: {input_text}
+######################
+Output:

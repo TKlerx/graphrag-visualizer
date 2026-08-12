@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import GraphViewer from "./GraphViewer";
-import { Box, Container, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import { useDropzone } from "react-dropzone";
 import DropZone from "./DropZone";
 import Introduction from "./Introduction";
@@ -9,6 +19,25 @@ import useFileHandler from "../hooks/useFileHandler";
 import useGraphData from "../hooks/useGraphData";
 import DataTableContainer from "./DataTableContainer";
 import ReactGA from "react-ga4";
+
+const demoArtifactSets = [
+  {
+    id: "forterro-only-v1",
+    label: "Forterro Only",
+    path: "artifact-sets/forterro-only-v1",
+    apiGraphId: "forterro-only-v1",
+    description: "Original public proxy corpus before adding proALPHA.",
+    stats: "14 docs · 653 entities · 920 relationships · 155 communities",
+  },
+  {
+    id: "proalpha-target-v2",
+    label: "Forterro + proALPHA",
+    path: "artifact-sets/proalpha-target-v2",
+    apiGraphId: "proalpha-target-v2",
+    description: "Expanded corpus with proALPHA as the hypothetical target.",
+    stats: "21 docs · 707 entities · 998 relationships · 181 communities",
+  },
+];
 
 const GraphDataHandler: React.FC = () => {
   const location = useLocation();
@@ -31,6 +60,11 @@ const GraphDataHandler: React.FC = () => {
   const [includeCommunities, setIncludeCommunities] = useState(false);
   const [includeCovariates, setIncludeCovariates] = useState(false);
   const [maxEntities, setMaxEntities] = useState(500);
+  const [activeArtifactSet, setActiveArtifactSet] = useState<string>("Current");
+  const [activeApiGraphId, setActiveApiGraphId] = useState<string>("default");
+  const [loadingArtifactSet, setLoadingArtifactSet] = useState<string | null>(
+    null
+  );
 
   const {
     entities,
@@ -42,6 +76,7 @@ const GraphDataHandler: React.FC = () => {
     communityReports,
     handleFilesRead,
     loadDefaultFiles,
+    loadArtifactSet,
   } = useFileHandler();
 
   const graphData = useGraphData(
@@ -99,7 +134,21 @@ const GraphDataHandler: React.FC = () => {
 
   const onDrop = (acceptedFiles: File[]) => {
     handleFilesRead(acceptedFiles);
+    setActiveArtifactSet("Uploaded files");
+    setActiveApiGraphId("default");
     navigate("/graph", { replace: true });
+  };
+
+  const handleLoadArtifactSet = async (artifactSet: (typeof demoArtifactSets)[number]) => {
+    setLoadingArtifactSet(artifactSet.id);
+    try {
+      await loadArtifactSet(artifactSet.path);
+      setActiveArtifactSet(artifactSet.label);
+      setActiveApiGraphId(artifactSet.apiGraphId);
+      setMaxEntities(500);
+    } finally {
+      setLoadingArtifactSet(null);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -150,6 +199,51 @@ const GraphDataHandler: React.FC = () => {
           }}
         >
           <DropZone {...{ getRootProps, getInputProps, isDragActive }} />
+          <Box sx={{ mt: 3 }}>
+            <Typography variant="h5" gutterBottom>
+              Demo Graph Snapshots
+            </Typography>
+            <Stack spacing={2}>
+              {demoArtifactSets.map((artifactSet) => (
+                <Card key={artifactSet.id} variant="outlined">
+                  <CardContent>
+                    <Stack
+                      direction={{ xs: "column", sm: "row" }}
+                      spacing={2}
+                      alignItems={{ xs: "stretch", sm: "center" }}
+                      justifyContent="space-between"
+                    >
+                      <Box>
+                        <Typography variant="h6">{artifactSet.label}</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {artifactSet.description}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {artifactSet.stats}
+                        </Typography>
+                      </Box>
+                      <Button
+                        variant={
+                          activeArtifactSet === artifactSet.label
+                            ? "contained"
+                            : "outlined"
+                        }
+                        onClick={() => handleLoadArtifactSet(artifactSet)}
+                        disabled={loadingArtifactSet !== null}
+                        sx={{ minWidth: 160 }}
+                      >
+                        {loadingArtifactSet === artifactSet.id
+                          ? "Loading..."
+                          : activeArtifactSet === artifactSet.label
+                          ? "Loaded"
+                          : "Load Graph"}
+                      </Button>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              ))}
+            </Stack>
+          </Box>
           <Introduction />
         </Container>
       )}
@@ -195,6 +289,8 @@ const GraphDataHandler: React.FC = () => {
             maxEntities={maxEntities}
             onMaxEntitiesChange={setMaxEntities}
             totalEntities={entities.length}
+            apiGraphId={activeApiGraphId}
+            selectedGraphLabel={activeArtifactSet}
           />
         </Box>
       )}

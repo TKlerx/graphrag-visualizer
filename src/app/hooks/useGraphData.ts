@@ -280,7 +280,9 @@ const useGraphData = (
       links.push(...covariateTextUnitLinks);
     }
 
-    links.forEach(link => {
+    const validLinks = links.filter((link) => nodesMap[link.source] && nodesMap[link.target]);
+
+    validLinks.forEach(link => {
       const sourceNode = nodesMap[link.source];
       const targetNode = nodesMap[link.target];
       if (sourceNode && targetNode) {
@@ -297,7 +299,9 @@ const useGraphData = (
 
 
     if (nodes.length > 0) {
-      setGraphData({ nodes, links });
+      setGraphData({ nodes, links: validLinks });
+    } else {
+      setGraphData({ nodes: [], links: [] });
     }
   }, [
     entities,

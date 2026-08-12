@@ -25,3 +25,25 @@ yarn-error.log*
 .env
 
 /public/artifacts
+
+# local demo corpus downloads generated from public URLs
+/demo/corpus/raw/
+/demo/corpus/text/
+/demo/graphrag/workspace/
+/demo/graphrag/workspace-*/
+/demo/graphrag/snapshots/
+/demo/graphrag/__pycache__/
+/demo/ic-memo/generated/*
+!/demo/ic-memo/generated/.gitkeep
+
+# OpenTofu/Terraform local working files
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+!*.tfvars.example
+
+# local generated reports and render checks
+/output/
+/tmp/

@@ -64,6 +64,8 @@ interface GraphViewerProps {
   maxEntities: number;
   onMaxEntitiesChange: React.Dispatch<React.SetStateAction<number>>;
   totalEntities: number;
+  apiGraphId?: string;
+  selectedGraphLabel: string;
 }
 
 const NODE_R = 8;
@@ -89,6 +91,8 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
   maxEntities,
   onMaxEntitiesChange,
   totalEntities,
+  apiGraphId,
+  selectedGraphLabel,
 }) => {
   const theme = useTheme();
   const [highlightNodes, setHighlightNodes] = useState<Set<CustomNode>>(
@@ -144,13 +148,15 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
 
   const handleApiSearch = async (
     query: string,
-    searchType: "local" | "global"
+    searchType: "local" | "global" | "drift"
   ) => {
     try {
       const data: SearchResult =
         searchType === "local"
-          ? await agent.Search.local(query)
-          : await agent.Search.global(query);
+          ? await agent.Search.local(query, apiGraphId)
+          : searchType === "global"
+          ? await agent.Search.global(query, apiGraphId)
+          : await agent.Search.drift(query, apiGraphId);
 
       setApiSearchResults(data);
       // Process the search result to update the graph data
@@ -755,8 +761,10 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
         apiSearchResults={apiSearchResults}
         localSearchEnabled={localSearchEnabled}
         globalSearchEnabled={includeCommunities}
+        driftSearchEnabled={includeCommunities}
         hasCovariates={hasCovariates}
         serverUp={serverUp}
+        selectedGraphLabel={selectedGraphLabel}
       />
 
       <SearchDrawer
@@ -916,7 +924,7 @@ const GraphViewer: React.FC<GraphViewerProps> = ({
           onClick={toggleApiDrawer(true)}
           startIcon={<SearchIcon />}
         >
-          Ask Query (Local/Global Search)
+          Ask Query (Local/Global/Drift Search)
         </Button>
         <Button
           variant="contained"

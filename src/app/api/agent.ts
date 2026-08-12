@@ -52,9 +52,16 @@ const requests = {
   delete: (url: string) => axios.delete(url).then(responseBody),
 };
 
+const searchParams = (query: string, graph?: string) => {
+  const params = new URLSearchParams({ query });
+  if (graph) params.set('graph', graph);
+  return params;
+};
+
 const Search = {
-  global: (query: string) => requests.get('search/global', new URLSearchParams({ query })),
-  local: (query: string) => requests.get('search/local', new URLSearchParams({ query })),
+  global: (query: string, graph?: string) => requests.get('search/global', searchParams(query, graph)),
+  local: (query: string, graph?: string) => requests.get('search/local', searchParams(query, graph)),
+  drift: (query: string, graph?: string) => requests.get('search/drift', searchParams(query, graph)),
 };
 
 const Status = {

@@ -1,0 +1,20 @@
+subscription_id = "00000000-0000-0000-0000-000000000000"
+location        = "swedencentral"
+prefix          = "pg-tk-test"
+
+resource_group_name = "proj-pg-tk-test"
+
+# GraphRAG uses the preferred chat deployment when enabled.
+deploy_preferred_chat_model    = true
+preferred_chat_model_name      = "gpt-5.4"
+preferred_chat_model_version   = "2026-03-05"
+preferred_chat_model_capacity  = 100
+embedding_model_capacity       = 100
+
+# Static Web Apps is unavailable in Sweden Central.
+static_web_app_location = "westeurope"
+deploy_static_web_app   = false
+
+# Replace after building and pushing a real graphrag-api image to ACR.
+deploy_api_container_app = false
+api_container_image      = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"

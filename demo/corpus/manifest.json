@@ -1,0 +1,142 @@
+{
+  "name": "forterro-pe-ic-demo-corpus",
+  "description": "Public proxy corpus for a Partners Group-style investment committee preparation showcase around Forterro, proALPHA, and European industrial ERP software.",
+  "sources": [
+    {
+      "id": "partners-group-forterro-case-study",
+      "title": "Partners Group Forterro investment case study",
+      "category": "sponsor_prior_investment",
+      "url": "https://www.partnersgroup.com/en/our-investments/private-equity/forterro",
+      "localFileName": "partners-group-forterro-case-study.html",
+      "demoUse": "Prior investment knowledge, investment thesis, business-building initiatives, market tailwinds."
+    },
+    {
+      "id": "partners-group-forterro-acquisition",
+      "title": "Partners Group Forterro acquisition announcement",
+      "category": "transaction_announcement",
+      "url": "https://www.partnersgroup.com/news-and-views/press-releases/investment-news/detail?news_id=c6a69c36-9083-406e-8ef0-0349317325fb",
+      "localFileName": "partners-group-forterro-acquisition.html",
+      "demoUse": "Deal rationale, valuation marker, value creation plan, sponsor language."
+    },
+    {
+      "id": "forterro-investors",
+      "title": "Forterro investor page",
+      "category": "target_company",
+      "url": "https://www.forterro.com/en/investors",
+      "localFileName": "forterro-investors.html",
+      "demoUse": "Current company positioning, strategy, subscription and cloud readiness claims."
+    },
+    {
+      "id": "battery-forterro-case-study",
+      "title": "Battery Ventures Forterro case study",
+      "category": "seller_prior_owner",
+      "url": "https://www.battery.com/blog/forterro-case-study/",
+      "localFileName": "battery-forterro-case-study.html",
+      "demoUse": "Historical value creation, seller perspective, add-on acquisition and software platform story."
+    },
+    {
+      "id": "eu-merger-m10709",
+      "title": "European Commission merger case M.10709",
+      "category": "regulatory_transaction",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX%3A32022M10709",
+      "localFileName": "eu-merger-m10709.pdf",
+      "demoUse": "Regulatory market definitions, parties, transaction context, competitive landscape."
+    },
+    {
+      "id": "partners-group-private-markets-outlook-2026",
+      "title": "Partners Group Private Markets Outlook 2026",
+      "category": "market_context",
+      "url": "https://www.partnersgroup.com/en/news-and-views/perspective/private-markets-outlook-2026",
+      "localFileName": "partners-group-private-markets-outlook-2026.html",
+      "demoUse": "Sponsor house view on private markets, valuation discipline, value creation, macro backdrop."
+    },
+    {
+      "id": "partners-group-annual-report-2024",
+      "title": "Partners Group Annual Report 2024",
+      "category": "sponsor_context",
+      "url": "https://www.partnersgroup.com/~/media/Files/P/Partnersgroup/Universal/shareholders/reports-and-presentations/2025/annual-report-2024.pdf",
+      "localFileName": "partners-group-annual-report-2024.pdf",
+      "demoUse": "Sponsor strategy, investment platform, value creation approach, reporting language."
+    },
+    {
+      "id": "bain-global-private-equity-report-2026",
+      "title": "Bain Global Private Equity Report 2026",
+      "category": "market_context",
+      "url": "https://www.bain.com/globalassets/noindex/2026/bain-report_global-private-equity-report-2026.pdf",
+      "localFileName": "bain-global-private-equity-report-2026.pdf",
+      "demoUse": "Private equity cycle, exit environment, value creation, deal market context."
+    },
+    {
+      "id": "mckinsey-global-private-markets-report-2026",
+      "title": "McKinsey Global Private Markets Report 2026",
+      "category": "market_context",
+      "url": "https://www.mckinsey.com/industries/private-capital/our-insights/global-private-markets-report",
+      "localFileName": "global-private-markets-report-2026-full-report.pdf",
+      "demoUse": "Private markets trends, alpha, operational value creation, liquidity and risk themes."
+    },
+    {
+      "id": "pitchbook-us-private-equity-outlook-2026",
+      "title": "PitchBook 2026 US Private Equity Outlook",
+      "category": "market_context",
+      "url": "https://pitchbook.brightspotcdn.com/a2/46/d213c56546e8809e36c4cb4a700f/2026-us-private-equity-outlook.pdf",
+      "localFileName": "pitchbook-us-private-equity-outlook-2026.pdf",
+      "demoUse": "Exit activity, holding periods, inventory backlog, PE outlook datapoints."
+    },
+    {
+      "id": "proalpha-about",
+      "title": "Proalpha company overview",
+      "category": "investment_target",
+      "url": "https://www.proalpha.com/en/about-us",
+      "localFileName": "proalpha-about.html",
+      "demoUse": "Target company scale, customer base, product platform, geographic footprint, partner ecosystem."
+    },
+    {
+      "id": "proalpha-success-story",
+      "title": "Proalpha success story and ownership milestones",
+      "category": "investment_target",
+      "url": "https://www.proalpha.com/en/about-us/success-story",
+      "localFileName": "proalpha-success-story.html",
+      "demoUse": "Company history, ERP market positioning, Bregal and ICG ownership context."
+    },
+    {
+      "id": "arma-proalpha-icg-transaction",
+      "title": "Arma Partners proALPHA majority recapitalisation by ICG",
+      "category": "transaction_comparable",
+      "url": "https://www.armapartners.com/advised-bregal-unternehmerkapital-on-the-sale-of-its-portfolio-company-proalpha-business-solutions-gmbh-a-leading-provider-of-enterprise-resource-planning-software-to-icg/",
+      "localFileName": "arma-proalpha-icg-transaction.html",
+      "demoUse": "Sponsor ownership, historical scale, DACH ERP positioning, prior transaction context."
+    },
+    {
+      "id": "proalpha-persis-acquisition",
+      "title": "Proalpha acquisition of Persis",
+      "category": "target_mna",
+      "url": "https://www.proalpha.com/en/blog/akquisition_persis",
+      "localFileName": "proalpha-persis-acquisition.html",
+      "demoUse": "Add-on acquisition strategy, HCM expansion, ERP+ platform extension, cross-sell rationale."
+    },
+    {
+      "id": "proalpha-gedys-acquisition",
+      "title": "Proalpha acquisition of GEDYS IntraWare",
+      "category": "target_mna",
+      "url": "https://www.proalpha.com/en/blog/proalpha-acquires-gedys",
+      "localFileName": "proalpha-gedys-acquisition.html",
+      "demoUse": "CRM expansion, best-of-suite plus best-of-breed strategy, customer base, integration rationale."
+    },
+    {
+      "id": "proalpha-mkg-acquisition",
+      "title": "Proalpha acquisition of MKG",
+      "category": "target_mna",
+      "url": "https://www.proalpha.com/en/blog/acquisition-mkg-erp",
+      "localFileName": "proalpha-mkg-acquisition.html",
+      "demoUse": "Benelux expansion, metalworking vertical, internationalization and smaller-customer segment strategy."
+    },
+    {
+      "id": "proalpha-erp-release-95",
+      "title": "Proalpha ERP release 9.5",
+      "category": "target_product",
+      "url": "https://www.proalpha.com/en/blog/erp-release-9.5",
+      "localFileName": "proalpha-erp-release-95.html",
+      "demoUse": "Product roadmap, MES/quality integration, AI apps, ESG features, customer collaboration."
+    }
+  ]
+}

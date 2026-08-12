@@ -146,12 +146,14 @@ const useFileHandler = () => {
     }
   };
 
-  const loadDefaultFiles = async () => {
+  const loadDefaultFiles = async (artifactBasePath = "artifacts") => {
     const filesToLoad = [];
 
     for (const baseName of baseFileNames) {
-      const prefixedPath = process.env.PUBLIC_URL + `/artifacts/create_final_${baseName}`;
-      const unprefixedPath = process.env.PUBLIC_URL + `/artifacts/${baseName}`;
+      const prefixedPath =
+        process.env.PUBLIC_URL + `/${artifactBasePath}/create_final_${baseName}`;
+      const unprefixedPath =
+        process.env.PUBLIC_URL + `/${artifactBasePath}/${baseName}`;
   
       if (await checkFileExists(prefixedPath)) {
         filesToLoad.push(prefixedPath);
@@ -168,6 +170,10 @@ const useFileHandler = () => {
     }
   };
 
+  const loadArtifactSet = async (artifactBasePath: string) => {
+    await loadDefaultFiles(artifactBasePath);
+  };
+
   return {
     entities,
     relationships,
@@ -178,6 +184,7 @@ const useFileHandler = () => {
     communityReports,
     handleFilesRead,
     loadDefaultFiles,
+    loadArtifactSet,
   };
 };
 

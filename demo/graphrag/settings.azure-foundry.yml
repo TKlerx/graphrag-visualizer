@@ -1,0 +1,139 @@
+# Template settings for Microsoft GraphRAG with Azure AI Foundry/Azure OpenAI model deployments.
+# Copy this file into a GraphRAG project created with `graphrag init`, then adjust paths and model values as needed.
+#
+# Current GraphRAG docs use YAML config with .env token replacement and model definitions under
+# `completion_models` and `embedding_models`.
+
+completion_models:
+  default_completion_model:
+    model_provider: azure
+    model: ${GRAPHRAG_CHAT_DEPLOYMENT}
+    azure_deployment_name: ${GRAPHRAG_CHAT_DEPLOYMENT}
+    api_base: ${GRAPHRAG_API_BASE}
+    api_version: "${GRAPHRAG_API_VERSION}"
+    auth_method: ${GRAPHRAG_AUTH_METHOD}
+    api_key: ${GRAPHRAG_API_KEY}
+    retry:
+      type: exponential_backoff
+      max_retries: 12
+      base_delay: 10.0
+      jitter: true
+      max_delay: 180.0
+    rate_limit:
+      type: sliding_window
+      period_in_seconds: 60
+      requests_per_period: 80
+      tokens_per_period: 90000
+    call_args:
+      temperature: 0
+
+embedding_models:
+  default_embedding_model:
+    model_provider: azure
+    model: ${GRAPHRAG_EMBEDDING_DEPLOYMENT}
+    azure_deployment_name: ${GRAPHRAG_EMBEDDING_DEPLOYMENT}
+    api_base: ${GRAPHRAG_API_BASE}
+    api_version: "${GRAPHRAG_API_VERSION}"
+    auth_method: ${GRAPHRAG_AUTH_METHOD}
+    api_key: ${GRAPHRAG_API_KEY}
+    retry:
+      type: exponential_backoff
+      max_retries: 12
+      base_delay: 10.0
+      jitter: true
+      max_delay: 180.0
+    rate_limit:
+      type: sliding_window
+      period_in_seconds: 60
+      requests_per_period: 120
+      tokens_per_period: 90000
+
+input:
+  type: text
+  file_pattern: ".*\\.(txt|md)$$"
+
+input_storage:
+  type: file
+  base_dir: input
+
+chunking:
+  type: tokens
+  size: 2400
+  overlap: 150
+  encoding_model: o200k_base
+
+output_storage:
+  type: file
+  base_dir: output
+
+cache:
+  type: json
+  storage:
+    type: file
+    base_dir: cache
+
+reporting:
+  type: file
+  base_dir: logs
+
+vector_store:
+  type: lancedb
+  db_uri: output/lancedb
+
+extract_graph:
+  completion_model_id: default_completion_model
+  prompt: prompts/pe_ic_entity_relationship_extraction.txt
+  entity_types:
+    - COMPANY
+    - SPONSOR
+    - PRODUCT
+    - MARKET
+    - CUSTOMER_SEGMENT
+    - GEOGRAPHY
+    - TRANSACTION
+    - FINANCIAL_METRIC
+    - VALUE_CREATION_LEVER
+    - RISK
+    - DILIGENCE_GAP
+    - ESG_TOPIC
+  max_gleanings: 0
+
+summarize_descriptions:
+  completion_model_id: default_completion_model
+
+community_reports:
+  completion_model_id: default_completion_model
+  text_prompt: prompts/pe_ic_community_report.txt
+
+embed_text:
+  embedding_model_id: default_embedding_model
+  names:
+    - text_unit_text
+    - entity_description
+    - community_full_content
+
+local_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+
+global_search:
+  completion_model_id: default_completion_model
+
+drift_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  drift_k_followups: 4
+  primer_folds: 2
+  primer_llm_max_tokens: 6000
+  n_depth: 1
+  local_search_text_unit_prop: 0.75
+  local_search_community_prop: 0.05
+  local_search_top_k_mapped_entities: 5
+  local_search_top_k_relationships: 5
+  local_search_max_data_tokens: 6000
+  reduce_max_completion_tokens: 1200
+
+snapshots:
+  embeddings: false
+  graphml: true
+  raw_graph: false

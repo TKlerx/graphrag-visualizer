@@ -1,0 +1,96 @@
+{
+  "name": "forterro-ic-question-catalogue",
+  "purpose": "Reusable section-by-section retrieval prompts for drafting an evidence-guided private equity investment committee memo.",
+  "sections": [
+    {
+      "section": "Executive Summary",
+      "objective": "State the recommendation, investment thesis, main risks, and required next diligence.",
+      "globalPrompt": "What are the main investment merits, risks, and open questions for a Forterro-style European industrial ERP software platform?",
+      "localPrompt": "Find source-backed facts about Forterro, its owner, customer base, product category, valuation marker, and value creation plan.",
+      "driftPrompt": "Draft an IC executive summary for a Forterro-style investment using only retrieved evidence and clearly label unresolved diligence gaps.",
+      "evidenceExpectations": ["named parties", "transaction context", "market thesis", "risk themes"],
+      "gapChecks": ["recommendation basis", "valuation support", "financial evidence", "exit path"]
+    },
+    {
+      "section": "Transaction Overview",
+      "objective": "Explain the transaction, parties, timing, perimeter, and strategic rationale.",
+      "globalPrompt": "Summarize the transaction context and strategic rationale around Partners Group and Forterro.",
+      "localPrompt": "Find facts about acquisition timing, seller, buyer, enterprise value, financing, and regulatory context.",
+      "driftPrompt": "Draft the transaction overview section with cited evidence and missing deal terms.",
+      "evidenceExpectations": ["buyer", "seller", "enterprise value", "regulatory filing"],
+      "gapChecks": ["ownership percentage", "debt package", "management rollover", "fees"]
+    },
+    {
+      "section": "Business Model",
+      "objective": "Describe products, customers, revenue model, retention drivers, and mission criticality.",
+      "globalPrompt": "What business model characteristics make industrial ERP software attractive or risky?",
+      "localPrompt": "Find evidence on Forterro products, ERP brands, industrial mid-market customers, subscription/cloud readiness, and customer base.",
+      "driftPrompt": "Draft the business model section and separate evidence-backed claims from assumptions.",
+      "evidenceExpectations": ["product category", "customer count", "recurring revenue indicators", "cloud strategy"],
+      "gapChecks": ["ARR", "gross retention", "net retention", "pricing model"]
+    },
+    {
+      "section": "Market",
+      "objective": "Assess market size, growth, structural tailwinds, cyclicality, and geographic exposure.",
+      "globalPrompt": "What are the key market trends for private equity and European industrial ERP software?",
+      "localPrompt": "Find evidence on digitization, industrial SMB ERP demand, Europe exposure, and private equity market conditions.",
+      "driftPrompt": "Draft the market section for an IC memo and flag unsupported market-sizing assumptions.",
+      "evidenceExpectations": ["digitization trend", "industrial SMB market", "private equity cycle", "regional context"],
+      "gapChecks": ["TAM", "growth rate", "country mix", "cyclicality sensitivity"]
+    },
+    {
+      "section": "Competitive Position",
+      "objective": "Evaluate differentiation, fragmentation, substitutes, and defensibility.",
+      "globalPrompt": "What competitive advantages and threats are visible for vertical industrial ERP platforms?",
+      "localPrompt": "Find facts about Forterro's brand portfolio, local market reach, customer base, and manufacturing subsectors.",
+      "driftPrompt": "Draft the competitive positioning section with strengths, threats, and diligence gaps.",
+      "evidenceExpectations": ["portfolio brands", "customer niches", "geographic reach", "regulatory market definitions"],
+      "gapChecks": ["competitor list", "win rates", "churn by competitor", "product depth"]
+    },
+    {
+      "section": "Financial Profile",
+      "objective": "Summarize known financial indicators and identify missing metrics.",
+      "globalPrompt": "What financial profile should an IC memo test for a vertical software platform?",
+      "localPrompt": "Find available evidence on valuation, customer count, revenue model, growth, and profitability indicators.",
+      "driftPrompt": "Draft the financial profile section using available evidence and a clear missing-data checklist.",
+      "evidenceExpectations": ["valuation marker", "scale indicators", "revenue model", "growth plan"],
+      "gapChecks": ["revenue", "EBITDA", "ARR", "cash conversion", "leverage"]
+    },
+    {
+      "section": "Value Creation",
+      "objective": "Identify organic, inorganic, operational, and product-led value creation levers.",
+      "globalPrompt": "What value creation levers matter for private equity-owned vertical software businesses?",
+      "localPrompt": "Find evidence on Forterro go-to-market initiatives, strategic acquisitions, cloud offerings, and operational efficiency.",
+      "driftPrompt": "Draft a value creation plan section with initiatives, evidence, KPIs, and diligence questions.",
+      "evidenceExpectations": ["go-to-market", "M&A", "cloud", "operational efficiency"],
+      "gapChecks": ["initiative owners", "KPI baseline", "implementation cost", "time to value"]
+    },
+    {
+      "section": "Risks",
+      "objective": "Describe commercial, technology, execution, financing, and exit risks.",
+      "globalPrompt": "What risk themes should an IC memo cover for a software platform investment in the current PE environment?",
+      "localPrompt": "Find evidence on market risks, execution risks, competition, valuation discipline, liquidity, and exit conditions.",
+      "driftPrompt": "Draft a risk section with mitigants and open diligence items.",
+      "evidenceExpectations": ["valuation environment", "exit market", "execution risk", "technology risk"],
+      "gapChecks": ["customer concentration", "product obsolescence", "cybersecurity", "AI disruption"]
+    },
+    {
+      "section": "ESG and Responsible Investment",
+      "objective": "Identify relevant ESG considerations and data gaps.",
+      "globalPrompt": "What ESG considerations are relevant for a European industrial software platform and its sponsor?",
+      "localPrompt": "Find sponsor ESG approach, company footprint, customer sectors, and governance indicators.",
+      "driftPrompt": "Draft the ESG section with available evidence and missing checks.",
+      "evidenceExpectations": ["sponsor policy", "governance", "customer sectors", "data privacy"],
+      "gapChecks": ["carbon footprint", "employee metrics", "data protection", "supplier risk"]
+    },
+    {
+      "section": "Recommendation and Diligence Plan",
+      "objective": "Convert evidence into a conditional recommendation and next-step diligence agenda.",
+      "globalPrompt": "Based on the corpus, what should the committee decide and what diligence remains?",
+      "localPrompt": "Find the strongest evidence for and against proceeding with a Forterro-style investment.",
+      "driftPrompt": "Draft the recommendation section with conditions to proceed, required evidence, and workplan.",
+      "evidenceExpectations": ["investment merits", "risk mitigants", "open questions", "workplan"],
+      "gapChecks": ["valuation threshold", "downside case", "management references", "exit underwriting"]
+    }
+  ]
+}
